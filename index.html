@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GHAF Business Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #2C6975;
+      --primary: #2C6975;
+      --primary-mid: #68B2A0;
+      --primary-light: #CDE0C9;
+      --primary-pale: #E0ECDE;
+      --gray-900: #1e4a54;
+      --gray-700: #2C6975;
+      --gray-500: #68B2A0;
+      --gray-300: #a8cfc4;
+      --gray-200: #CDE0C9;
+      --gray-100: #E0ECDE;
+      --white: #fff;
+      --accent: #2C6975;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--gray-700);
+      background: var(--white);
+      line-height: 1.6;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--primary-light);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon { width: 36px; height: 36px; flex-shrink: 0; }
+    .logo-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary);
+      letter-spacing: -0.3px;
+    }
+    .logo-sub {
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--gray-500);
+      letter-spacing: 0.5px;
+      display: block;
+      line-height: 1;
+      margin-top: 1px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray-500);
+      font-size: 13.5px;
+      font-weight: 400;
+      padding: 7px 14px;
+      border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--black); background: var(--gray-100); }
+    .nav-cta {
+      background: var(--black) !important;
+      color: var(--white) !important;
+      font-weight: 500 !important;
+    }
+    .nav-cta:hover { opacity: 0.8 !important; background: var(--black) !important; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 62px;
+      border-bottom: 1px solid var(--gray-200);
+      background: linear-gradient(160deg, #fff 60%, var(--primary-pale) 100%);
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      width: 100%;
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gray-500);
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: clamp(36px, 4.5vw, 56px);
+      font-weight: 300;
+      color: var(--black);
+      letter-spacing: -2px;
+      line-height: 1.08;
+      margin-bottom: 28px;
+    }
+    h1 em {
+      font-style: normal;
+      font-weight: 600;
+    }
+    .hero-desc {
+      font-size: 16px;
+      color: var(--gray-500);
+      line-height: 1.75;
+      max-width: 420px;
+      margin-bottom: 44px;
+    }
+    .hero-actions { display: flex; gap: 12px; }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 11px 24px;
+      border-radius: 7px;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: all 0.15s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-dark { background: var(--primary); color: var(--white); }
+    .btn-dark:hover { background: var(--gray-900); }
+    .btn-ghost { background: transparent; color: var(--primary); border: 1px solid var(--gray-300); }
+    .btn-ghost:hover { border-color: var(--primary); background: var(--primary-pale); }
+
+    /* Hero right */
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .meta-row {
+      display: flex;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--gray-200);
+      gap: 16px;
+      transition: background 0.15s;
+    }
+    .meta-row:last-child { border-bottom: none; }
+    .meta-row:hover { background: var(--primary-pale); }
+    .meta-num {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--black);
+      min-width: 60px;
+      letter-spacing: -0.5px;
+    }
+    .meta-label { font-size: 13px; color: var(--gray-500); line-height: 1.4; }
+    .meta-label strong { display: block; color: var(--gray-700); font-weight: 500; }
+
+    /* ─── STRIP ─── */
+    .strip {
+      border-bottom: 1px solid var(--gray-200);
+      overflow: hidden;
+      background: var(--primary-pale);
+    }
+    .strip-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .strip-item {
+      padding: 32px 0;
+      border-right: 1px solid var(--gray-200);
+      padding-left: 32px;
+    }
+    .strip-item:first-child { padding-left: 0; }
+    .strip-item:last-child { border-right: none; }
+    .strip-num {
+      font-size: 36px;
+      font-weight: 300;
+      letter-spacing: -1.5px;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .strip-label { font-size: 12px; color: var(--primary-mid); }
+
+    /* ─── SECTIONS ─── */
+    .section { padding: 100px 32px; border-bottom: 1px solid var(--gray-200); }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 64px;
+      align-items: end;
+    }
+    .section-header-full { text-align: center; max-width: 560px; margin: 0 auto 64px; }
+
+    .label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gray-400, #999);
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 300;
+      letter-spacing: -1.2px;
+      line-height: 1.15;
+      color: var(--black);
+    }
+    h2 em { font-style: normal; font-weight: 600; }
+    .sub {
+      font-size: 15px;
+      color: var(--gray-500);
+      line-height: 1.7;
+    }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--primary-pale); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-checks { margin-top: 36px; display: flex; flex-direction: column; }
+    .check {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .check:last-child { border-bottom: none; }
+    .check-mark { font-size: 12px; color: var(--primary-mid); margin-top: 2px; font-weight: 600; }
+    .check-text { font-size: 14px; color: var(--gray-700); line-height: 1.6; }
+    .about-right {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .about-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 24px 28px;
+    }
+    .about-card-icon { font-size: 24px; margin-bottom: 12px; }
+    .about-card h4 { font-size: 14px; font-weight: 600; color: var(--black); margin-bottom: 6px; }
+    .about-card p { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
+
+    /* ─── SERVICES ─── */
+    #services { background: var(--white); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .service-card {
+      padding: 36px 32px;
+      border-right: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .service-card:nth-child(3n) { border-right: none; }
+    .service-card:nth-child(4),
+    .service-card:nth-child(5),
+    .service-card:nth-child(6) { border-bottom: none; }
+    .service-card:hover { background: var(--primary-pale); }
+    .service-num {
+      font-size: 11px;
+      color: var(--gray-300);
+      font-weight: 500;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+    .service-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 10px;
+      letter-spacing: -0.2px;
+    }
+    .service-card p { font-size: 13px; color: var(--gray-500); line-height: 1.65; }
+
+    /* ─── COMPLIANCE ─── */
+    #compliance { background: var(--primary); }
+    #compliance .label { color: var(--primary-light); }
+    #compliance h2 { color: var(--white); }
+    #compliance h2 em { color: #fff; font-style: normal; font-weight: 600; }
+    #compliance .sub { color: rgba(255,255,255,0.75); }
+    .compliance-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 60px;
+    }
+    .comp-item {
+      background: var(--primary);
+      padding: 32px 36px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      transition: background 0.15s;
+    }
+    .comp-item:hover { background: var(--gray-900); }
+    .comp-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.12);
+      color: var(--primary-light);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .comp-item h4 { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+    .comp-item p { font-size: 12.5px; color: rgba(255,255,255,0.8); line-height: 1.55; }
+
+    /* ─── PROCESS ─── */
+    #process { background: var(--primary-pale); }
+    .process-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .process-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 2fr;
+      gap: 32px;
+      align-items: start;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .process-row:last-child { border-bottom: none; }
+    .p-num { font-size: 13px; color: var(--gray-300); font-weight: 500; padding-top: 2px; }
+    .p-title { font-size: 15px; font-weight: 600; color: var(--black); }
+    .p-desc { font-size: 14px; color: var(--gray-500); line-height: 1.65; }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--white); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-info-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .ci-row {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .ci-row:first-child { padding-top: 0; }
+    .ci-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gray-300); margin-bottom: 6px; font-weight: 500; }
+    .ci-value { font-size: 14px; color: var(--gray-700); line-height: 1.6; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group.full { grid-column: span 2; }
+    label { font-size: 11.5px; font-weight: 500; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.8px; }
+    input, select, textarea {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 7px;
+      padding: 11px 14px;
+      font-size: 14px;
+      color: var(--black);
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+      width: 100%;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--black);
+      background: var(--white);
+    }
+    input::placeholder, textarea::placeholder { color: var(--gray-300); }
+    textarea { resize: vertical; min-height: 110px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--primary-light);
+      background: var(--primary-pale);
+      padding: 48px 32px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-left { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a {
+      text-decoration: none;
+      font-size: 13px;
+      color: var(--gray-500);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--black); }
+    .footer-copy { font-size: 12px; color: var(--gray-300); }
+
+    /* ─── HERO PHOTO ─── */
+    .hero-photo-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+    }
+    .hero-photo {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-photo-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(44,105,117,0.95) 0%, rgba(44,105,117,0.5) 100%);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* ─── ABOUT PHOTO ─── */
+    .about-photo-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .about-photo {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+    }
+    .about-photo-tag {
+      position: absolute;
+      bottom: 20px; left: 20px;
+      background: white;
+      border-radius: 10px;
+      padding: 12px 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    .about-photo-tag strong { display: block; font-size: 13px; font-weight: 600; color: var(--primary); }
+    .about-photo-tag span { font-size: 11px; color: var(--gray-500); }
+
+    /* ─── CARE SECTION ─── */
+    .care-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .care-photo { overflow: hidden; }
+    .care-photo img { width: 100%; height: 100%; min-height: 480px; object-fit: cover; display: block; }
+    .care-content {
+      padding: 80px 64px;
+      background: var(--primary-pale);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .care-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
+    .care-stat-num { font-size: 36px; font-weight: 300; letter-spacing: -1.5px; color: var(--primary); line-height: 1; margin-bottom: 6px; }
+    .care-stat-label { font-size: 12px; color: var(--gray-500); line-height: 1.5; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .section-header { grid-template-columns: 1fr; gap: 16px; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .service-card:nth-child(3n) { border-right: 1px solid var(--gray-200); }
+      .service-card:nth-child(2n) { border-right: none; }
+      .compliance-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .strip-inner { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+      .care-grid { grid-template-columns: 1fr; }
+      .care-photo img { min-height: 280px; }
+      .care-content { padding: 48px 32px; }
+    }
+    @media (max-width: 580px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { border-right: none !important; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: span 1; }
+      .process-row { grid-template-columns: 40px 1fr; }
+      .p-desc { grid-column: 2; margin-top: -8px; }
+    }
+
+    /* ─── FADE IN ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#">
+      <svg class="logo-icon" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- G-shaped circle ring -->
+        <path d="M 92 21 A 48 48 0 1 0 92 83" stroke="#2C6975" stroke-width="5.5" fill="none" stroke-linecap="butt"/>
+        <!-- G crossbar -->
+        <line x1="92" y1="83" x2="68" y2="83" stroke="#2C6975" stroke-width="5.5" stroke-linecap="round"/>
+        <!-- Buildings (outlined) -->
+        <rect x="26" y="66" width="10" height="22" stroke="#2C6975" stroke-width="2.5" fill="none"/>
+        <rect x="38" y="54" width="10" height="34" stroke="#2C6975" stroke-width="2.5" fill="none"/>
+        <rect x="50" y="40" width="10" height="48" stroke="#2C6975" stroke-width="2.5" fill="none"/>
+        <rect x="62" y="46" width="10" height="42" stroke="#2C6975" stroke-width="2.5" fill="none"/>
+        <rect x="74" y="60" width="10" height="28" stroke="#2C6975" stroke-width="2.5" fill="none"/>
+        <!-- Sweeping arrow -->
+        <path d="M 13 76 C 22 50 58 30 88 19" stroke="#2C6975" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 82 14 L 88 19 L 83 26" stroke="#2C6975" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <span class="logo-text">GHAF</span>
+        <span class="logo-sub">Business Services</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#compliance">Compliance</a></li>
+      <li><a href="#contact" class="nav-cta btn btn-dark">Get in touch</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Dubai, UAE &nbsp;·&nbsp; Est. 2021</div>
+      <h1>Let us care<br /><em>your claims.</em></h1>
+      <p class="hero-desc">
+        Healthcare business process outsourcing for UAE providers — medical coding, billing, e-claims management, and prior authorization done right.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-dark">Get started</a>
+        <a href="#services" class="btn btn-ghost">Our services</a>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-photo-card">
+        <img src="images/prof.jpg" alt="GHAF Business Consultation" class="hero-photo" />
+        <div class="hero-photo-overlay">
+          <svg viewBox="0 0 110 110" fill="none" style="width:40px;height:40px;flex-shrink:0">
+            <path d="M 92 21 A 48 48 0 1 0 92 83" stroke="white" stroke-width="5.5" fill="none" stroke-linecap="butt"/>
+            <line x1="92" y1="83" x2="68" y2="83" stroke="white" stroke-width="5.5" stroke-linecap="round"/>
+            <rect x="26" y="66" width="10" height="22" stroke="white" stroke-width="2.5" fill="none"/>
+            <rect x="38" y="54" width="10" height="34" stroke="white" stroke-width="2.5" fill="none"/>
+            <rect x="50" y="40" width="10" height="48" stroke="white" stroke-width="2.5" fill="none"/>
+            <rect x="62" y="46" width="10" height="42" stroke="white" stroke-width="2.5" fill="none"/>
+            <rect x="74" y="60" width="10" height="28" stroke="white" stroke-width="2.5" fill="none"/>
+            <path d="M 13 76 C 22 50 58 30 88 19" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M 82 14 L 88 19 L 83 26" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <div style="font-size:15px;font-weight:600;color:#fff;">GHAF Business Services</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.7);">Dubai, UAE · Est. 2021</div>
+          </div>
+        </div>
+      </div>
+      <div class="meta-row">
+        <div class="meta-num">99%</div>
+        <div class="meta-label">
+          <strong>Claims accuracy</strong>
+          Certified coders, minimal denials
+        </div>
+      </div>
+      <div class="meta-row">
+        <div class="meta-num">DHA</div>
+        <div class="meta-label">
+          <strong>Full compliance</strong>
+          Dubai Health Authority certified
+        </div>
+      </div>
+      <div class="meta-row">
+        <div class="meta-num">MOH</div>
+        <div class="meta-label">
+          <strong>Northern Emirates</strong>
+          Sharjah & Ministry of Health
+        </div>
+      </div>
+      <div class="meta-row">
+        <div class="meta-num">24/7</div>
+        <div class="meta-label">
+          <strong>Support available</strong>
+          Dedicated reconciliation team
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-inner">
+    <div class="strip-item">
+      <div class="strip-num"><span class="count" data-target="500">0</span>+</div>
+      <div class="strip-label">Providers served</div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-num"><span class="count" data-target="99">0</span>%</div>
+      <div class="strip-label">Accuracy rate</div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-num"><span class="count" data-target="5">0</span>+</div>
+      <div class="strip-label">Years of excellence</div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-num">6</div>
+      <div class="strip-label">Core services</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        <div class="label">About</div>
+        <h2>Built by<br /><em>certified experts.</em></h2>
+        <p class="sub" style="margin-top:20px;">
+          GHAF Business Services was founded in Dubai by physicians, revenue management specialists, and clinical coding experts to deliver future-oriented BPO solutions for UAE healthcare organizations.
+        </p>
+        <div class="about-checks">
+          <div class="check">
+            <div class="check-mark">—</div>
+            <div class="check-text">Licensed physicians and multi-specialty clinical coding experts on every account</div>
+          </div>
+          <div class="check">
+            <div class="check-mark">—</div>
+            <div class="check-text">Strict compliance with DHA (Dubai), MOH (Sharjah & Northern Emirates), and HAAD regulations</div>
+          </div>
+          <div class="check">
+            <div class="check-mark">—</div>
+            <div class="check-text">IT-enabled systems for real-time monitoring and proactive error detection</div>
+          </div>
+          <div class="check">
+            <div class="check-mark">—</div>
+            <div class="check-text">Dedicated reconciliation team ensuring timely remittance realization</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-right reveal">
+        <div class="about-photo-wrap">
+          <img src="images/family1.jpg" alt="Patient families we serve" class="about-photo" />
+          <div class="about-photo-tag">
+            <strong>Serving UAE healthcare</strong>
+            <span>since 2021</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section">
+  <div class="section-inner">
+    <div class="section-header-full reveal">
+      <div class="label">Services</div>
+      <h2>Everything your revenue<br /><em>cycle needs.</em></h2>
+      <p class="sub" style="margin-top:16px;">End-to-end clinical revenue management — from coding to reimbursement.</p>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3>Medical Coding & Billing</h3>
+        <p>Certified multi-specialty clinical coders and billers ensuring accurate ICD-10 and CPT coding with maximum reimbursement and minimal claim denials.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3>E-Claims Management</h3>
+        <p>IT-enabled DHA e-claim processing that foresees potential threats, avoids penalties, and keeps your claims fully compliant with time-bound regulations.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3>Medical Claims Auditing</h3>
+        <p>Thorough end-to-end clinical RMS auditing in strict alignment with DHA, MOH, and HAAD standards — proficiency and accuracy guaranteed.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <h3>Remote Prior Authorization</h3>
+        <p>Real-time approvals via remote platforms with certified coders on hand. Our reconciliation team tracks remittance and ensures timely realization.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <h3>Training Programs</h3>
+        <p>Customized compliance training for doctors, nurses, and administration staff — built around your organization's workflows and regulatory requirements.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <h3>Revenue Cycle Management</h3>
+        <p>Full-cycle RCM strategy encompassing denial management, performance monitoring, and continuous optimization to maximize your return on investment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARE SECTION -->
+<section id="care" class="section" style="background:var(--white);padding-top:0;padding-bottom:0;">
+  <div class="care-grid">
+    <div class="care-photo">
+      <img src="images/family2.jpg" alt="Families we care for" />
+    </div>
+    <div class="care-content">
+      <div class="label">Our Mission</div>
+      <h2>Healthcare that puts<br /><em>people first.</em></h2>
+      <p class="sub" style="margin-top:16px;">Behind every claim is a patient and a family depending on timely, accurate processing. GHAF exists to make sure that care reaches them without administrative delay.</p>
+      <div class="care-stats">
+        <div class="care-stat">
+          <div class="care-stat-num">500+</div>
+          <div class="care-stat-label">Healthcare providers<br />supported across the UAE</div>
+        </div>
+        <div class="care-stat">
+          <div class="care-stat-num">99%</div>
+          <div class="care-stat-label">Claims accuracy<br />rate maintained</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section id="compliance" class="section">
+  <div class="section-inner">
+    <div class="section-header-full reveal">
+      <div class="label">Regulatory Compliance</div>
+      <h2>Fully aligned with<br /><em>UAE healthcare law.</em></h2>
+    </div>
+    <div class="compliance-grid reveal">
+      <div class="comp-item">
+        <div class="comp-tag">DHA</div>
+        <div>
+          <h4>Dubai Health Authority</h4>
+          <p>Complete e-claim compliance including DRG coding, claim submission timelines, and documentation standards for Dubai-licensed facilities.</p>
+        </div>
+      </div>
+      <div class="comp-item">
+        <div class="comp-tag">MOH</div>
+        <div>
+          <h4>Ministry of Health</h4>
+          <p>Full compliance with MOH guidelines for Sharjah and the Northern Emirates, including prior authorization workflows and insurer requirements.</p>
+        </div>
+      </div>
+      <div class="comp-item">
+        <div class="comp-tag">HAAD</div>
+        <div>
+          <h4>Health Authority Abu Dhabi</h4>
+          <p>Coding and billing practices aligned with Abu Dhabi's HAAD standards for claims submission and clinical documentation requirements.</p>
+        </div>
+      </div>
+      <div class="comp-item">
+        <div class="comp-tag">ICD-10</div>
+        <div>
+          <h4>International Classification</h4>
+          <p>ICD-10-CM and CPT coding applied precisely by certified coders — reducing upcoding risks and ensuring clean, approvable claims.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="label">How it works</div>
+        <h2>A simple,<br /><em>proven process.</em></h2>
+      </div>
+      <p class="sub">From onboarding to reimbursement — every step managed with precision and transparency.</p>
+    </div>
+    <div class="process-list reveal">
+      <div class="process-row">
+        <div class="p-num">01</div>
+        <div class="p-title">Consultation</div>
+        <div class="p-desc">We begin with a thorough assessment of your organization's current workflow, pain points, and compliance gaps before proposing any solution.</div>
+      </div>
+      <div class="process-row">
+        <div class="p-num">02</div>
+        <div class="p-title">Secure Data Intake</div>
+        <div class="p-desc">Patient records and encounter data are received through secure, HIPAA-aligned channels — protecting your organization and your patients at every step.</div>
+      </div>
+      <div class="process-row">
+        <div class="p-num">03</div>
+        <div class="p-title">Coding & Processing</div>
+        <div class="p-desc">Certified multi-specialty coders apply accurate ICD-10, CPT, and DRG codes. Every claim passes a quality check before submission.</div>
+      </div>
+      <div class="process-row">
+        <div class="p-num">04</div>
+        <div class="p-title">Electronic Submission</div>
+        <div class="p-desc">Clean claims are submitted electronically to insurers through DHA and MOH-compliant e-claim platforms for the fastest possible processing.</div>
+      </div>
+      <div class="process-row">
+        <div class="p-num">05</div>
+        <div class="p-title">Reconciliation & Reimbursement</div>
+        <div class="p-desc">Our dedicated team tracks every claim, follows up on denials, and reconciles remittance advice — ensuring you receive every dirham owed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="label">Contact</div>
+        <h2>Ready to get<br /><em>started?</em></h2>
+      </div>
+      <p class="sub">Reach out for a free consultation. Our team typically responds within one business day.</p>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-info-list">
+        <div class="ci-row">
+          <div class="ci-label">Location</div>
+          <div class="ci-value">Office #26, First Gulf Business Center L.L.C<br />Al Muhaisnah 4, 2nd Floor, Madina Mall<br />Dubai, UAE</div>
+        </div>
+        <div class="ci-row">
+          <div class="ci-label">Phone</div>
+          <div class="ci-value">+971-42 888 632</div>
+        </div>
+        <div class="ci-row">
+          <div class="ci-label">Email</div>
+          <div class="ci-value">contact@ghafservices.com</div>
+        </div>
+        <div class="ci-row">
+          <div class="ci-label">Hours</div>
+          <div class="ci-value">Mon – Fri &nbsp;9:00 AM – 6:00 PM<br />Saturday &nbsp;9:00 AM – 1:00 PM</div>
+        </div>
+        <div class="ci-row">
+          <div class="ci-label">Compliance</div>
+          <div class="ci-value">DHA &nbsp;·&nbsp; MOH &nbsp;·&nbsp; HAAD Certified</div>
+        </div>
+      </div>
+      <form onsubmit="handleSubmit(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>First name</label>
+            <input type="text" placeholder="Ahmed" required />
+          </div>
+          <div class="form-group">
+            <label>Last name</label>
+            <input type="text" placeholder="Al-Rashid" required />
+          </div>
+          <div class="form-group full">
+            <label>Email</label>
+            <input type="email" placeholder="you@hospital.ae" required />
+          </div>
+          <div class="form-group full">
+            <label>Organization</label>
+            <input type="text" placeholder="Clinic or hospital name" />
+          </div>
+          <div class="form-group full">
+            <label>Service of interest</label>
+            <select>
+              <option value="">Select a service…</option>
+              <option>Medical Coding & Billing</option>
+              <option>E-Claims Management</option>
+              <option>Medical Claims Auditing</option>
+              <option>Remote Prior Authorization</option>
+              <option>Training Programs</option>
+              <option>Revenue Cycle Management</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Message</label>
+            <textarea placeholder="Tell us about your needs…"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark" style="width:100%;justify-content:center;padding:13px;" id="submit-btn">
+          Send message
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a class="logo" href="#">
+      <svg class="logo-icon" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- G-shaped circle ring -->
+        <path d="M 92 21 A 48 48 0 1 0 92 83" stroke="#2C6975" stroke-width="5.5" fill="none" stroke-linecap="butt"/>
+        <!-- G crossbar -->
+        <line x1="92" y1="83" x2="68" y2="83" stroke="#2C6975" stroke-width="5.5" stroke-linecap="round"/>
+        <!-- Buildings (outlined) -->
+        <rect x="26" y="66" width="10" height="22" stroke="#2C6975" stroke-width="2.5" fill="none"/>
+        <rect x="38" y="54" width="10" height="34" stroke="#2C6975" stroke-width="2.5" fill="none"/>
+        <rect x="50" y="40" width="10" height="48" stroke="#2C6975" stroke-width="2.5" fill="none"/>
+        <rect x="62" y="46" width="10" height="42" stroke="#2C6975" stroke-width="2.5" fill="none"/>
+        <rect x="74" y="60" width="10" height="28" stroke="#2C6975" stroke-width="2.5" fill="none"/>
+        <!-- Sweeping arrow -->
+        <path d="M 13 76 C 22 50 58 30 88 19" stroke="#2C6975" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 82 14 L 88 19 L 83 26" stroke="#2C6975" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <span class="logo-text">GHAF</span>
+        <span class="logo-sub">Business Services</span>
+      </div>
+    </a>
+      <span class="footer-copy">© 2024 GHAF Business Services LLC. Office #26, First Gulf Business Center, Al Muhaisnah 4, Dubai, UAE.</span>
+    </div>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#compliance">Compliance</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+      <a href="#">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp float -->
+<a href="https://wa.me/971522031447" target="_blank" rel="noopener" class="wa-btn" title="Chat on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+  </svg>
+</a>
+
+<style>
+  .wa-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #2C6975;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(44,105,117,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .wa-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(44,105,117,0.55);
+  }
+</style>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => ro.observe(el));
+
+  // Counter
+  let counted = false;
+  const strip = document.querySelector('.strip');
+  const co = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !counted) {
+      counted = true;
+      document.querySelectorAll('.count').forEach(el => {
+        const target = +el.dataset.target, step = target / 50;
+        let cur = 0;
+        const t = setInterval(() => {
+          cur = Math.min(cur + step, target);
+          el.textContent = Math.floor(cur);
+          if (cur >= target) clearInterval(t);
+        }, 24);
+      });
+    }
+  }, { threshold: 0.5 });
+  co.observe(strip);
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = 'Message sent ✓';
+    btn.style.opacity = '0.5';
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = 'Send message'; btn.style.opacity = ''; btn.disabled = false; }, 3000);
+  }
+</script>
+</body>
+</html>
