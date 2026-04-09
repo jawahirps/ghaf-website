@@ -1117,5 +1117,211 @@
     document.querySelector('.nav-links').classList.toggle('open');
   }
 </script>
+
+<!-- AI CHATBOT -->
+<div id="chat-widget">
+  <button id="chat-toggle" onclick="toggleChat()" title="Ask GHAF AI">
+    <svg id="chat-icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg id="chat-icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" style="display:none"><path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+    <span id="chat-badge">1</span>
+  </button>
+  <div id="chat-window">
+    <div id="chat-header">
+      <div id="chat-header-info">
+        <div id="chat-avatar">
+          <svg width="18" height="18" viewBox="0 0 110 110" fill="none"><circle cx="55" cy="52" r="46" stroke="white" stroke-width="5.5"/><rect x="22" y="63" width="11" height="27" fill="white"/><rect x="35" y="51" width="11" height="39" fill="white"/><rect x="48" y="36" width="11" height="54" fill="white"/><rect x="61" y="44" width="11" height="46" fill="white"/><rect x="74" y="58" width="11" height="32" fill="white"/><path d="M 12 82 C 28 65 60 32 92 18" stroke="white" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 85 12 L 92 18 L 86 25" stroke="white" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div id="chat-name">GHAF Assistant</div>
+          <div id="chat-status"><span class="status-dot"></span>Online now</div>
+        </div>
+      </div>
+      <button onclick="toggleChat()" id="chat-close-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div id="chat-messages">
+      <div class="msg bot">
+        <div class="msg-bubble">Hi! I'm the GHAF assistant. I can answer questions about our medical billing, coding, and e-claims services. How can I help you today?</div>
+        <div class="msg-time">Just now</div>
+      </div>
+      <div id="quick-replies">
+        <button class="qr" onclick="sendQuick('What services do you offer?')">Our services</button>
+        <button class="qr" onclick="sendQuick('Are you DHA compliant?')">DHA compliance</button>
+        <button class="qr" onclick="sendQuick('How do I get started?')">Get started</button>
+        <button class="qr" onclick="sendQuick('What are your pricing plans?')">Pricing</button>
+      </div>
+    </div>
+    <div id="chat-input-area">
+      <input id="chat-input" type="text" placeholder="Type your question…" onkeydown="if(event.key==='Enter')sendMsg()" />
+      <button id="chat-send" onclick="sendMsg()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  #chat-widget { position:fixed; bottom:92px; right:24px; z-index:1000; font-family:'Plus Jakarta Sans',sans-serif; }
+  #chat-toggle {
+    width:56px; height:56px; border-radius:50%; border:none; cursor:pointer;
+    background:linear-gradient(135deg,#1E3A5F 0%,#059669 100%);
+    box-shadow:0 4px 20px rgba(30,58,95,0.4);
+    display:flex; align-items:center; justify-content:center;
+    transition:transform 0.2s, box-shadow 0.2s; position:relative;
+  }
+  #chat-toggle:hover { transform:scale(1.08); box-shadow:0 6px 28px rgba(30,58,95,0.55); }
+  #chat-badge {
+    position:absolute; top:-4px; right:-4px; background:#E8914A; color:#fff;
+    width:18px; height:18px; border-radius:50%; font-size:10px; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+  }
+  #chat-window {
+    display:none; position:absolute; bottom:68px; right:0;
+    width:340px; background:#fff; border-radius:16px;
+    box-shadow:0 8px 48px rgba(30,58,95,0.18); overflow:hidden;
+    flex-direction:column;
+  }
+  #chat-window.open { display:flex; }
+  #chat-header {
+    background:linear-gradient(135deg,#1E3A5F 0%,#059669 100%);
+    padding:16px 18px; display:flex; align-items:center; justify-content:space-between;
+  }
+  #chat-header-info { display:flex; align-items:center; gap:10px; }
+  #chat-avatar {
+    width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.15);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  #chat-name { font-size:14px; font-weight:600; color:#fff; }
+  #chat-status { font-size:11px; color:rgba(255,255,255,0.75); display:flex; align-items:center; gap:4px; margin-top:1px; }
+  .status-dot { width:6px; height:6px; background:#4ade80; border-radius:50%; display:inline-block; }
+  #chat-close-btn { background:none; border:none; cursor:pointer; padding:4px; opacity:0.8; }
+  #chat-close-btn:hover { opacity:1; }
+  #chat-messages { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; max-height:320px; }
+  .msg { display:flex; flex-direction:column; }
+  .msg.bot { align-items:flex-start; }
+  .msg.user { align-items:flex-end; }
+  .msg-bubble {
+    max-width:82%; padding:10px 14px; border-radius:14px; font-size:13.5px; line-height:1.6;
+  }
+  .msg.bot .msg-bubble { background:#f0f9ff; color:#1E3A5F; border-bottom-left-radius:4px; }
+  .msg.user .msg-bubble { background:linear-gradient(135deg,#1E3A5F,#059669); color:#fff; border-bottom-right-radius:4px; }
+  .msg-time { font-size:10px; color:#aaa; margin-top:3px; padding:0 4px; }
+  #quick-replies { display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+  .qr {
+    background:#fff; border:1.5px solid #A7F3D0; color:#059669;
+    border-radius:100px; padding:5px 12px; font-size:11.5px; font-weight:500;
+    cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif;
+    transition:background 0.15s, border-color 0.15s;
+  }
+  .qr:hover { background:#ECFDF5; border-color:#059669; }
+  .typing .msg-bubble { display:flex; gap:4px; align-items:center; padding:12px 16px; }
+  .typing-dot { width:7px; height:7px; background:#059669; border-radius:50%; animation:bounce 1.2s infinite; }
+  .typing-dot:nth-child(2) { animation-delay:0.2s; }
+  .typing-dot:nth-child(3) { animation-delay:0.4s; }
+  @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+  #chat-input-area {
+    display:flex; gap:8px; padding:12px 14px;
+    border-top:1px solid #e8f5e9; background:#fafffe;
+  }
+  #chat-input {
+    flex:1; border:1.5px solid #A7F3D0; border-radius:100px; padding:9px 14px;
+    font-size:13px; outline:none; font-family:'Plus Jakarta Sans',sans-serif;
+    transition:border-color 0.15s; background:#fff; color:#1E3A5F;
+  }
+  #chat-input:focus { border-color:#059669; }
+  #chat-send {
+    width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,#1E3A5F,#059669);
+    border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; transition:transform 0.15s;
+  }
+  #chat-send:hover { transform:scale(1.05); }
+</style>
+
+<script>
+  const RESPONSES = [
+    { k:['service','offer','do','provide','help'], r:"We offer 6 core services: Medical Coding & Billing, E-Claims Management, Medical Claims Auditing, Remote Prior Authorization, Staff Training Programs, and Revenue Cycle Management. Which would you like to know more about?" },
+    { k:['cod','billing','icd','cpt','drg'], r:"Our certified multi-specialty coders handle ICD-10, CPT, and DRG coding with 99% accuracy. We cover all specialties and ensure maximum reimbursement with minimal claim denials." },
+    { k:['eclaim','e-claim','electronic','submit'], r:"Our IT-enabled e-claims platform processes claims in compliance with DHA timelines, foresees potential rejections before submission, and keeps you penalty-free." },
+    { k:['audit','review','check'], r:"We provide end-to-end clinical RMS auditing aligned with DHA, MOH, and HAAD standards. Every claim is reviewed for accuracy, completeness, and compliance before and after submission." },
+    { k:['prior auth','authorization','approval'], r:"Our remote prior authorization service gives you real-time approvals through certified coders. Our reconciliation team tracks every request and follows up until resolved." },
+    { k:['train','course','staff','education'], r:"We offer customized compliance training programs for doctors, nurses, and admin staff — built around your facility's workflows, payer requirements, and regulatory obligations." },
+    { k:['rcm','revenue cycle','denial','reimburs'], r:"Our Revenue Cycle Management covers everything from claim submission to remittance reconciliation. We track denials, manage appeals, and ensure you receive every dirham owed." },
+    { k:['dha','dubai health','complian','regulat'], r:"Yes — we are fully compliant with DHA (Dubai Health Authority) e-claim standards, including DRG coding, submission timelines, and documentation requirements." },
+    { k:['moh','ministry','sharjah','northern'], r:"We are fully compliant with MOH guidelines for Sharjah and all Northern Emirates, covering prior authorization workflows and insurer requirements." },
+    { k:['haad','abu dhabi'], r:"We follow HAAD standards for Abu Dhabi facilities, ensuring accurate claims submission and clinical documentation alignment." },
+    { k:['pric','cost','fee','rate','how much'], r:"Our pricing is customized based on your facility size, specialty mix, and claim volume. Contact us at contact@ghafservices.com or call +971-42 888 632 for a free consultation and quote." },
+    { k:['start','begin','onboard','sign up','get'], r:"Getting started is simple: 1) Book a free consultation, 2) We assess your current workflow, 3) Secure data integration (5–10 days), 4) Go live. Call us at +971-42 888 632 or email contact@ghafservices.com." },
+    { k:['integrat','system','hospital','software'], r:"We integrate with all major UAE hospital information systems. Most integrations are completed within 5–10 business days via secure, HIPAA-aligned data channels." },
+    { k:['safe','secur','data','patient','hipaa','privac'], r:"Patient data security is our top priority. All transfers are encrypted through HIPAA-aligned channels. We never retain patient data beyond what's needed for claims, and all staff sign strict NDAs." },
+    { k:['reject','denial','re-submit','resubmit'], r:"Denials are reviewed, corrected, and resubmitted within 48 hours with a full audit trail. Our reconciliation team tracks every claim from submission to payment." },
+    { k:['insur','payer','daman','axa','oman','nextcare','nas','neuron'], r:"We work with all major UAE payers: Daman, AXA Gulf, Oman Insurance, Nextcare, NAS, Neuron — plus government schemes under DHA, MOH, and HAAD." },
+    { k:['contract','period','minim','how long'], r:"We offer flexible arrangements starting from a 3-month pilot. Most clients move to annual contracts after seeing the impact on their revenue cycle within the first 60 days." },
+    { k:['address','location','office','where','find'], r:"We're located at Office #26, First Gulf Business Center L.L.C, Al Muhaisnah 4, 2nd Floor, Madina Mall, Dubai, UAE." },
+    { k:['phone','call','contact','email','reach'], r:"You can reach us at:\n📞 +971-42 888 632\n📧 contact@ghafservices.com\n\nOffice hours: Mon–Fri 9am–6pm, Sat 9am–1pm." },
+    { k:['hour','time','open','availab'], r:"We're available Mon–Fri 9:00 AM – 6:00 PM and Saturday 9:00 AM – 1:00 PM UAE time. Our reconciliation team is also reachable outside hours for urgent matters." },
+  ];
+
+  function getBotReply(text) {
+    const t = text.toLowerCase();
+    for (const { k, r } of RESPONSES) {
+      if (k.some(w => t.includes(w))) return r;
+    }
+    return "Thanks for your question! For a detailed answer, please contact us at contact@ghafservices.com or call +971-42 888 632. Our team responds within one business day.";
+  }
+
+  function toggleChat() {
+    const win = document.getElementById('chat-window');
+    const openIcon = document.getElementById('chat-icon-open');
+    const closeIcon = document.getElementById('chat-icon-close');
+    const badge = document.getElementById('chat-badge');
+    win.classList.toggle('open');
+    if (win.classList.contains('open')) {
+      openIcon.style.display = 'none'; closeIcon.style.display = 'block';
+      badge.style.display = 'none';
+      document.getElementById('chat-input').focus();
+    } else {
+      openIcon.style.display = 'block'; closeIcon.style.display = 'none';
+    }
+  }
+
+  function addMsg(text, type) {
+    const msgs = document.getElementById('chat-messages');
+    const div = document.createElement('div');
+    div.className = `msg ${type}`;
+    const now = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    div.innerHTML = `<div class="msg-bubble">${text.replace(/\n/g,'<br>')}</div><div class="msg-time">${now}</div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function showTyping() {
+    const msgs = document.getElementById('chat-messages');
+    const div = document.createElement('div');
+    div.className = 'msg bot typing'; div.id = 'typing-indicator';
+    div.innerHTML = '<div class="msg-bubble"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>';
+    msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function removeTyping() {
+    const t = document.getElementById('typing-indicator'); if (t) t.remove();
+  }
+
+  function sendMsg() {
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim(); if (!text) return;
+    document.getElementById('quick-replies')?.remove();
+    addMsg(text, 'user'); input.value = '';
+    showTyping();
+    setTimeout(() => { removeTyping(); addMsg(getBotReply(text), 'bot'); }, 800 + Math.random() * 600);
+  }
+
+  function sendQuick(text) {
+    document.getElementById('quick-replies')?.remove();
+    addMsg(text, 'user');
+    showTyping();
+    setTimeout(() => { removeTyping(); addMsg(getBotReply(text), 'bot'); }, 800 + Math.random() * 400);
+  }
+</script>
 </body>
 </html>
