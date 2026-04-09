@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GHAF Business Services</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -25,12 +25,14 @@
       --gray-100: #C8EBE4;
       --white: #fff;
       --accent: #2A9D8F;
+      --amber: #E8914A;
+      --amber-dark: #C97A35;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       color: var(--gray-700);
       background: var(--white);
       line-height: 1.6;
@@ -95,33 +97,54 @@
       transition: color 0.15s, background 0.15s;
     }
     .nav-links a:hover { color: var(--black); background: var(--gray-100); }
-    .nav-cta {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-vivid) 100%) !important;
-      color: var(--white) !important;
-      font-weight: 500 !important;
-      box-shadow: 0 2px 10px rgba(42,157,143,0.3);
-    }
-    .nav-cta:hover { opacity: 1 !important; box-shadow: 0 4px 16px rgba(42,157,143,0.5) !important; transform: translateY(-1px); }
+    .nav-cta { background: linear-gradient(135deg, #E8914A 0%, #C97A35 100%) !important; color: var(--white) !important; font-weight: 500 !important; box-shadow: 0 2px 10px rgba(232,145,74,0.3); }
+    .nav-cta:hover { opacity: 1 !important; box-shadow: 0 4px 16px rgba(232,145,74,0.5) !important; transform: translateY(-1px); }
+
+    /* ─── HAMBURGER ─── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--primary); border-radius: 2px; transition: all 0.2s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* ─── HERO ─── */
-    .hero {
-      min-height: 100vh;
+    .hero { padding-top: 62px; }
+    .hero-bg {
+      position: relative;
+      min-height: 88vh;
+      background-size: cover;
+      background-position: center 30%;
       display: flex;
       align-items: center;
-      padding-top: 62px;
-      border-bottom: 1px solid var(--gray-200);
-      background: linear-gradient(150deg, #fff 40%, var(--primary-xpale) 70%, var(--primary-pale) 100%);
     }
-    .hero-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 100px 32px;
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(120deg, rgba(13,78,90,0.88) 0%, rgba(26,102,115,0.72) 60%, rgba(42,157,143,0.4) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 660px;
+      padding: 100px 32px 100px 64px;
+    }
+    .hero-stats-bar {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-      width: 100%;
+      grid-template-columns: repeat(5, 1fr);
+      background: #fff;
+      border-bottom: 1px solid var(--gray-200);
+      box-shadow: 0 4px 24px rgba(26,102,115,0.1);
     }
+    .hero-stat {
+      padding: 24px 28px;
+      border-right: 1px solid var(--gray-200);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hero-stat:last-child { border-right: none; }
+    .hero-stat-num { font-size: 22px; font-weight: 700; color: var(--primary-vivid); letter-spacing: -0.5px; }
+    .hero-stat-label { font-size: 12px; color: var(--gray-500); }
+
     .eyebrow {
       font-size: 11px;
       font-weight: 500;
@@ -161,69 +184,12 @@
       cursor: pointer;
       border: none;
     }
-    .btn-dark { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-vivid) 100%); color: var(--white); box-shadow: 0 2px 12px rgba(42,157,143,0.35); }
-    .btn-dark:hover { background: linear-gradient(135deg, var(--gray-900) 0%, var(--primary) 100%); box-shadow: 0 4px 20px rgba(42,157,143,0.5); transform: translateY(-1px); }
+    .btn-dark { background: linear-gradient(135deg, #E8914A 0%, #C97A35 100%); color: #fff; box-shadow: 0 2px 12px rgba(232,145,74,0.35); }
+    .btn-dark:hover { background: linear-gradient(135deg, #C97A35 0%, #a8632a 100%); box-shadow: 0 4px 20px rgba(232,145,74,0.5); transform: translateY(-1px); }
     .btn-ghost { background: transparent; color: var(--primary); border: 1.5px solid var(--primary-mid); }
     .btn-ghost:hover { border-color: var(--primary-vivid); background: var(--primary-xpale); color: var(--primary-vivid); }
-
-    /* Hero right */
-    .hero-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      border: 1px solid var(--gray-200);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .meta-row {
-      display: flex;
-      align-items: center;
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--gray-200);
-      gap: 16px;
-      transition: background 0.15s;
-    }
-    .meta-row:last-child { border-bottom: none; }
-    .meta-row:hover { background: var(--primary-pale); }
-    .meta-num {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--primary-vivid);
-      min-width: 60px;
-      letter-spacing: -0.5px;
-    }
-    .meta-label { font-size: 13px; color: var(--gray-500); line-height: 1.4; }
-    .meta-label strong { display: block; color: var(--gray-700); font-weight: 500; }
-
-    /* ─── STRIP ─── */
-    .strip {
-      border-bottom: none;
-      overflow: hidden;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-vivid) 100%);
-    }
-    .strip-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 32px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-    }
-    .strip-item {
-      padding: 36px 0;
-      border-right: 1px solid rgba(255,255,255,0.2);
-      padding-left: 32px;
-    }
-    .strip-item:first-child { padding-left: 0; }
-    .strip-item:last-child { border-right: none; }
-    .strip-num {
-      font-size: 38px;
-      font-weight: 300;
-      letter-spacing: -1.5px;
-      color: #fff;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-    .strip-label { font-size: 12px; color: rgba(255,255,255,0.75); letter-spacing: 0.3px; }
+    .btn-ghost-light { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.5); }
+    .btn-ghost-light:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.8); }
 
     /* ─── SECTIONS ─── */
     .section { padding: 100px 32px; border-bottom: 1px solid var(--gray-200); }
@@ -259,6 +225,42 @@
       color: var(--gray-500);
       line-height: 1.7;
     }
+
+    /* ─── WHY GHAF ─── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 24px;
+      margin-top: 8px;
+    }
+    .why-card {
+      padding: 36px 32px;
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+    }
+    .why-card:hover {
+      box-shadow: 0 8px 32px rgba(42,157,143,0.14);
+      transform: translateY(-3px);
+      border-color: var(--primary-vivid);
+    }
+    .why-icon {
+      width: 52px; height: 52px;
+      background: var(--primary-xpale);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--primary-vivid);
+      margin-bottom: 20px;
+    }
+    .why-card h3 { font-size: 17px; font-weight: 600; color: var(--black); margin-bottom: 10px; }
+    .why-card p { font-size: 13.5px; color: var(--gray-500); line-height: 1.7; }
+
+    /* ─── LOGOS STRIP ─── */
+    .logos-strip { background: var(--primary-xpale); border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200); padding: 28px 32px; }
+    .logos-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+    .logos-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gray-300); white-space: nowrap; font-weight: 500; }
+    .logos-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .logo-pill { padding: 8px 18px; background: #fff; border: 1px solid var(--gray-200); border-radius: 100px; font-size: 13px; font-weight: 500; color: var(--gray-500); }
 
     /* ─── ABOUT ─── */
     #about { background: var(--primary-xpale); }
@@ -410,6 +412,29 @@
     .p-title { font-size: 15px; font-weight: 600; color: var(--black); }
     .p-desc { font-size: 14px; color: var(--gray-500); line-height: 1.65; }
 
+    /* ─── FAQ ─── */
+    .faq-list { display: flex; flex-direction: column; border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden; }
+    .faq-item { border-bottom: 1px solid var(--gray-200); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      width: 100%; text-align: left; background: none; border: none;
+      padding: 22px 28px; font-size: 15px; font-weight: 500; color: var(--black);
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background 0.15s;
+    }
+    .faq-q:hover { background: var(--primary-xpale); }
+    .faq-q.open { color: var(--primary-vivid); }
+    .faq-icon { font-size: 20px; font-weight: 300; flex-shrink: 0; color: var(--primary-vivid); transition: transform 0.2s; }
+    .faq-q.open .faq-icon { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      font-size: 14px; color: var(--gray-500); line-height: 1.75;
+      padding: 0 28px;
+    }
+    .faq-a.open { max-height: 200px; padding: 0 28px 22px; }
+
     /* ─── CONTACT ─── */
     #contact { background: var(--white); }
     .contact-grid {
@@ -441,7 +466,7 @@
       padding: 11px 14px;
       font-size: 14px;
       color: var(--black);
-      font-family: 'Inter', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       outline: none;
       transition: border-color 0.15s, background 0.15s;
       width: 100%;
@@ -452,55 +477,6 @@
     }
     input::placeholder, textarea::placeholder { color: var(--gray-300); }
     textarea { resize: vertical; min-height: 110px; }
-
-    /* ─── FOOTER ─── */
-    footer {
-      border-top: 3px solid var(--primary-vivid);
-      background: linear-gradient(135deg, var(--primary-xpale) 0%, var(--primary-pale) 100%);
-      padding: 48px 32px;
-    }
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .footer-left { display: flex; flex-direction: column; gap: 10px; }
-    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
-    .footer-links a {
-      text-decoration: none;
-      font-size: 13px;
-      color: var(--gray-500);
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--black); }
-    .footer-copy { font-size: 12px; color: var(--gray-300); }
-
-    /* ─── HERO PHOTO ─── */
-    .hero-photo-card {
-      position: relative;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--gray-200);
-    }
-    .hero-photo {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      display: block;
-    }
-    .hero-photo-overlay {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: linear-gradient(to top, rgba(44,105,117,0.95) 0%, rgba(44,105,117,0.5) 100%);
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
 
     /* ─── ABOUT PHOTO ─── */
     .about-photo-wrap {
@@ -543,9 +519,47 @@
     .care-stat-num { font-size: 40px; font-weight: 300; letter-spacing: -1.5px; color: var(--primary-vivid); line-height: 1; margin-bottom: 6px; }
     .care-stat-label { font-size: 12px; color: var(--gray-500); line-height: 1.5; }
 
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 3px solid var(--primary-vivid);
+      background: linear-gradient(135deg, var(--primary-xpale) 0%, var(--primary-pale) 100%);
+      padding: 48px 32px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-left { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a {
+      text-decoration: none;
+      font-size: 13px;
+      color: var(--gray-500);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--black); }
+    .footer-copy { font-size: 12px; color: var(--gray-300); }
+
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: fixed; top: 62px; left: 0; right: 0;
+        background: #fff; flex-direction: column; gap: 0;
+        border-bottom: 1px solid var(--gray-200);
+        padding: 8px 0; z-index: 99;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links li { width: 100%; }
+      .nav-links a { display: block; padding: 14px 24px; border-radius: 0; font-size: 15px; }
+      .nav-cta { margin: 8px 16px; border-radius: 8px !important; text-align: center; }
       .about-grid { grid-template-columns: 1fr; }
       .section-header { grid-template-columns: 1fr; gap: 16px; }
       .services-grid { grid-template-columns: 1fr 1fr; }
@@ -553,11 +567,13 @@
       .service-card:nth-child(2n) { border-right: none; }
       .compliance-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
-      .strip-inner { grid-template-columns: repeat(2, 1fr); }
-      .nav-links { display: none; }
       .care-grid { grid-template-columns: 1fr; }
       .care-photo img { min-height: 280px; }
       .care-content { padding: 48px 32px; }
+      .why-grid { grid-template-columns: 1fr; }
+      .hero-stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .hero-stat:nth-child(5) { grid-column: span 2; border-right: none; }
+      .hero-content { padding: 80px 24px 80px 32px; }
     }
     @media (max-width: 580px) {
       .services-grid { grid-template-columns: 1fr; }
@@ -603,101 +619,41 @@
     </a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
+      <li><a href="#why">Why GHAF</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#compliance">Compliance</a></li>
+      <li><a href="#faq">FAQ</a></li>
       <li><a href="#contact" class="nav-cta btn btn-dark">Get in touch</a></li>
     </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-inner">
-    <div>
-      <div class="eyebrow">Dubai, UAE &nbsp;·&nbsp; Est. 2021</div>
-      <h1>Let us care<br /><em>your claims.</em></h1>
-      <p class="hero-desc">
-        Healthcare business process outsourcing for UAE providers — medical coding, billing, e-claims management, and prior authorization done right.
-      </p>
+  <div class="hero-bg" style="background-image:url('images/prof.jpg')">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="eyebrow" style="color:rgba(255,255,255,0.7)">Dubai, UAE &nbsp;·&nbsp; Est. 2021</div>
+      <h1 style="color:#fff">Let us care<br /><em style="color:var(--primary-light)">your claims.</em></h1>
+      <p class="hero-desc" style="color:rgba(255,255,255,0.8)">Healthcare business process outsourcing for UAE providers — medical coding, billing, e-claims management, and prior authorization done right.</p>
       <div class="hero-actions">
         <a href="#contact" class="btn btn-dark">Get started</a>
-        <a href="#services" class="btn btn-ghost">Our services</a>
+        <a href="#services" class="btn btn-ghost-light">Our services</a>
       </div>
     </div>
-    <div class="hero-meta">
-      <div class="hero-photo-card">
-        <img src="images/prof.jpg" alt="GHAF Business Consultation" class="hero-photo" />
-        <div class="hero-photo-overlay">
-          <svg viewBox="0 0 110 110" fill="none" style="width:40px;height:40px;flex-shrink:0">
-            <circle cx="55" cy="52" r="46" stroke="white" stroke-width="5.5" fill="none"/>
-            <rect x="22" y="63" width="11" height="27" fill="white"/>
-            <rect x="35" y="51" width="11" height="39" fill="white"/>
-            <rect x="48" y="36" width="11" height="54" fill="white"/>
-            <rect x="61" y="44" width="11" height="46" fill="white"/>
-            <rect x="74" y="58" width="11" height="32" fill="white"/>
-            <path d="M 12 82 C 28 65 60 32 92 18" stroke="white" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-            <path d="M 85 12 L 92 18 L 86 25" stroke="white" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <div>
-            <div style="font-size:15px;font-weight:600;color:#fff;">GHAF Business Services</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.7);">Dubai, UAE · Est. 2021</div>
-          </div>
-        </div>
-      </div>
-      <div class="meta-row">
-        <div class="meta-num">99%</div>
-        <div class="meta-label">
-          <strong>Claims accuracy</strong>
-          Certified coders, minimal denials
-        </div>
-      </div>
-      <div class="meta-row">
-        <div class="meta-num">DHA</div>
-        <div class="meta-label">
-          <strong>Full compliance</strong>
-          Dubai Health Authority certified
-        </div>
-      </div>
-      <div class="meta-row">
-        <div class="meta-num">MOH</div>
-        <div class="meta-label">
-          <strong>Northern Emirates</strong>
-          Sharjah & Ministry of Health
-        </div>
-      </div>
-      <div class="meta-row">
-        <div class="meta-num">24/7</div>
-        <div class="meta-label">
-          <strong>Support available</strong>
-          Dedicated reconciliation team
-        </div>
-      </div>
-    </div>
+  </div>
+  <div class="hero-stats-bar">
+    <div class="hero-stat"><span class="hero-stat-num">99%</span><span class="hero-stat-label">Claims accuracy</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">DHA</span><span class="hero-stat-label">Fully compliant</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">MOH</span><span class="hero-stat-label">Northern Emirates</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">24/7</span><span class="hero-stat-label">Support available</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">500+</span><span class="hero-stat-label">Providers served</span></div>
   </div>
 </section>
-
-<!-- STRIP -->
-<div class="strip">
-  <div class="strip-inner">
-    <div class="strip-item">
-      <div class="strip-num"><span class="count" data-target="500">0</span>+</div>
-      <div class="strip-label">Providers served</div>
-    </div>
-    <div class="strip-item">
-      <div class="strip-num"><span class="count" data-target="99">0</span>%</div>
-      <div class="strip-label">Accuracy rate</div>
-    </div>
-    <div class="strip-item">
-      <div class="strip-num"><span class="count" data-target="5">0</span>+</div>
-      <div class="strip-label">Years of excellence</div>
-    </div>
-    <div class="strip-item">
-      <div class="strip-num">6</div>
-      <div class="strip-label">Core services</div>
-    </div>
-  </div>
-</div>
 
 <!-- ABOUT -->
 <section id="about" class="section">
@@ -740,6 +696,54 @@
     </div>
   </div>
 </section>
+
+<!-- WHY GHAF -->
+<section id="why" class="section" style="background:var(--white)">
+  <div class="section-inner">
+    <div class="section-header-full reveal">
+      <div class="label">Why Choose Us</div>
+      <h2>The difference<br /><em>expertise makes.</em></h2>
+    </div>
+    <div class="why-grid reveal">
+      <div class="why-card">
+        <div class="why-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Speed</h3>
+        <p>Claims submitted within 24 hours of receipt. Our IT-enabled systems eliminate delays that cost providers revenue.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Accuracy</h3>
+        <p>99% claims accuracy maintained by certified multi-specialty coders. Fewer rejections means faster reimbursement.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Compliance</h3>
+        <p>Full alignment with DHA, MOH, and HAAD regulations. We stay current so you never face penalties or audit risk.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos-strip">
+  <div class="logos-inner">
+    <span class="logos-label">Trusted by providers across the UAE</span>
+    <div class="logos-row">
+      <div class="logo-pill">Daman</div>
+      <div class="logo-pill">AXA Gulf</div>
+      <div class="logo-pill">Oman Insurance</div>
+      <div class="logo-pill">Nextcare</div>
+      <div class="logo-pill">Neuron</div>
+      <div class="logo-pill">NAS</div>
+    </div>
+  </div>
+</div>
 
 <!-- SERVICES -->
 <section id="services" class="section">
@@ -888,6 +892,56 @@
   </div>
 </section>
 
+<!-- FAQ -->
+<section id="faq" class="section" style="background:var(--white)">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="label">FAQ</div>
+        <h2>Common<br /><em>questions.</em></h2>
+      </div>
+      <p class="sub">Everything clinic owners ask us before getting started.</p>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How quickly can GHAF integrate with our existing hospital system?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Most integrations are completed within 5–10 business days. We support all major UAE hospital information systems including the DHA-approved platforms and can work with custom setups via secure data feeds.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is our patient data safe with GHAF?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Yes. All data is transmitted through encrypted, HIPAA-aligned channels. We never store patient identifiable information beyond what is required for claims processing, and all staff are bound by strict NDAs and data handling protocols.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Do you handle claim rejections and re-submissions?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Absolutely. Our reconciliation team tracks every claim from submission to payment. Denials are reviewed, corrected, and re-submitted within 48 hours with a full audit trail available to your team.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Which insurance networks do you work with?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">We work with all major payers in the UAE including Daman, AXA Gulf, Oman Insurance, Nextcare, NAS, and Neuron — as well as government schemes under DHA, MOH, and HAAD.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What is the minimum contract period?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">We offer flexible arrangements starting from a 3-month pilot. Most clients move to annual contracts after seeing the impact on their revenue cycle within the first 60 days.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact" class="section">
   <div class="section-inner">
@@ -994,6 +1048,7 @@
       <a href="#services">Services</a>
       <a href="#compliance">Compliance</a>
       <a href="#process">Process</a>
+      <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
       <a href="#">Privacy</a>
     </div>
@@ -1037,25 +1092,6 @@
   }, { threshold: 0.08 });
   reveals.forEach(el => ro.observe(el));
 
-  // Counter
-  let counted = false;
-  const strip = document.querySelector('.strip');
-  const co = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting && !counted) {
-      counted = true;
-      document.querySelectorAll('.count').forEach(el => {
-        const target = +el.dataset.target, step = target / 50;
-        let cur = 0;
-        const t = setInterval(() => {
-          cur = Math.min(cur + step, target);
-          el.textContent = Math.floor(cur);
-          if (cur >= target) clearInterval(t);
-        }, 24);
-      });
-    }
-  }, { threshold: 0.5 });
-  co.observe(strip);
-
   // Form submit
   function handleSubmit(e) {
     e.preventDefault();
@@ -1064,6 +1100,21 @@
     btn.style.opacity = '0.5';
     btn.disabled = true;
     setTimeout(() => { btn.textContent = 'Send message'; btn.style.opacity = ''; btn.disabled = false; }, 3000);
+  }
+
+  // FAQ accordion
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const ans = item.querySelector('.faq-a');
+    const isOpen = btn.classList.contains('open');
+    document.querySelectorAll('.faq-q').forEach(b => { b.classList.remove('open'); b.closest('.faq-item').querySelector('.faq-a').classList.remove('open'); });
+    if (!isOpen) { btn.classList.add('open'); ans.classList.add('open'); }
+  }
+
+  // Hamburger menu
+  function toggleMenu() {
+    document.querySelector('.hamburger').classList.toggle('open');
+    document.querySelector('.nav-links').classList.toggle('open');
   }
 </script>
 </body>
