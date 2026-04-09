@@ -10,19 +10,21 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black: #2C6975;
-      --primary: #2C6975;
-      --primary-mid: #68B2A0;
-      --primary-light: #CDE0C9;
-      --primary-pale: #E0ECDE;
-      --gray-900: #1e4a54;
-      --gray-700: #2C6975;
-      --gray-500: #68B2A0;
-      --gray-300: #a8cfc4;
-      --gray-200: #CDE0C9;
-      --gray-100: #E0ECDE;
+      --black: #1A6673;
+      --primary: #1A6673;
+      --primary-vivid: #2A9D8F;
+      --primary-mid: #4CAF9E;
+      --primary-light: #8ECFC0;
+      --primary-pale: #C8EBE4;
+      --primary-xpale: #E8F7F4;
+      --gray-900: #0D4E5A;
+      --gray-700: #1A6673;
+      --gray-500: #4CAF9E;
+      --gray-300: #80C4B7;
+      --gray-200: #B2DECE;
+      --gray-100: #C8EBE4;
       --white: #fff;
-      --accent: #2C6975;
+      --accent: #2A9D8F;
     }
 
     html { scroll-behavior: smooth; }
@@ -41,9 +43,10 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(255,255,255,0.94);
+      background: rgba(255,255,255,0.96);
       backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--primary-light);
+      border-bottom: 1px solid var(--gray-200);
+      box-shadow: 0 1px 0 0 var(--primary-pale);
     }
     .nav-inner {
       max-width: 1100px;
@@ -93,11 +96,12 @@
     }
     .nav-links a:hover { color: var(--black); background: var(--gray-100); }
     .nav-cta {
-      background: var(--black) !important;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-vivid) 100%) !important;
       color: var(--white) !important;
       font-weight: 500 !important;
+      box-shadow: 0 2px 10px rgba(42,157,143,0.3);
     }
-    .nav-cta:hover { opacity: 0.8 !important; background: var(--black) !important; }
+    .nav-cta:hover { opacity: 1 !important; box-shadow: 0 4px 16px rgba(42,157,143,0.5) !important; transform: translateY(-1px); }
 
     /* ─── HERO ─── */
     .hero {
@@ -106,7 +110,7 @@
       align-items: center;
       padding-top: 62px;
       border-bottom: 1px solid var(--gray-200);
-      background: linear-gradient(160deg, #fff 60%, var(--primary-pale) 100%);
+      background: linear-gradient(150deg, #fff 40%, var(--primary-xpale) 70%, var(--primary-pale) 100%);
     }
     .hero-inner {
       max-width: 1100px;
@@ -150,17 +154,17 @@
       display: inline-block;
       text-decoration: none;
       padding: 11px 24px;
-      border-radius: 7px;
+      border-radius: 8px;
       font-size: 13.5px;
       font-weight: 500;
-      transition: all 0.15s;
+      transition: all 0.2s ease;
       cursor: pointer;
       border: none;
     }
-    .btn-dark { background: var(--primary); color: var(--white); }
-    .btn-dark:hover { background: var(--gray-900); }
-    .btn-ghost { background: transparent; color: var(--primary); border: 1px solid var(--gray-300); }
-    .btn-ghost:hover { border-color: var(--primary); background: var(--primary-pale); }
+    .btn-dark { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-vivid) 100%); color: var(--white); box-shadow: 0 2px 12px rgba(42,157,143,0.35); }
+    .btn-dark:hover { background: linear-gradient(135deg, var(--gray-900) 0%, var(--primary) 100%); box-shadow: 0 4px 20px rgba(42,157,143,0.5); transform: translateY(-1px); }
+    .btn-ghost { background: transparent; color: var(--primary); border: 1.5px solid var(--primary-mid); }
+    .btn-ghost:hover { border-color: var(--primary-vivid); background: var(--primary-xpale); color: var(--primary-vivid); }
 
     /* Hero right */
     .hero-meta {
@@ -183,8 +187,8 @@
     .meta-row:hover { background: var(--primary-pale); }
     .meta-num {
       font-size: 22px;
-      font-weight: 600;
-      color: var(--black);
+      font-weight: 700;
+      color: var(--primary-vivid);
       min-width: 60px;
       letter-spacing: -0.5px;
     }
@@ -193,9 +197,9 @@
 
     /* ─── STRIP ─── */
     .strip {
-      border-bottom: 1px solid var(--gray-200);
+      border-bottom: none;
       overflow: hidden;
-      background: var(--primary-pale);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-vivid) 100%);
     }
     .strip-inner {
       max-width: 1100px;
@@ -205,21 +209,21 @@
       grid-template-columns: repeat(4, 1fr);
     }
     .strip-item {
-      padding: 32px 0;
-      border-right: 1px solid var(--gray-200);
+      padding: 36px 0;
+      border-right: 1px solid rgba(255,255,255,0.2);
       padding-left: 32px;
     }
     .strip-item:first-child { padding-left: 0; }
     .strip-item:last-child { border-right: none; }
     .strip-num {
-      font-size: 36px;
+      font-size: 38px;
       font-weight: 300;
       letter-spacing: -1.5px;
-      color: var(--primary);
+      color: #fff;
       line-height: 1;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
-    .strip-label { font-size: 12px; color: var(--primary-mid); }
+    .strip-label { font-size: 12px; color: rgba(255,255,255,0.75); letter-spacing: 0.3px; }
 
     /* ─── SECTIONS ─── */
     .section { padding: 100px 32px; border-bottom: 1px solid var(--gray-200); }
@@ -257,7 +261,7 @@
     }
 
     /* ─── ABOUT ─── */
-    #about { background: var(--primary-pale); }
+    #about { background: var(--primary-xpale); }
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -273,7 +277,7 @@
       border-bottom: 1px solid var(--gray-200);
     }
     .check:last-child { border-bottom: none; }
-    .check-mark { font-size: 12px; color: var(--primary-mid); margin-top: 2px; font-weight: 600; }
+    .check-mark { font-size: 16px; color: var(--primary-vivid); margin-top: 0px; font-weight: 700; }
     .check-text { font-size: 14px; color: var(--gray-700); line-height: 1.6; }
     .about-right {
       display: flex;
@@ -283,8 +287,14 @@
     .about-card {
       background: var(--white);
       border: 1px solid var(--gray-200);
+      border-left: 3px solid var(--primary-vivid);
       border-radius: 10px;
       padding: 24px 28px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .about-card:hover {
+      box-shadow: 0 4px 20px rgba(42,157,143,0.15);
+      transform: translateY(-2px);
     }
     .about-card-icon { font-size: 24px; margin-bottom: 12px; }
     .about-card h4 { font-size: 14px; font-weight: 600; color: var(--black); margin-bottom: 6px; }
@@ -303,20 +313,31 @@
       padding: 36px 32px;
       border-right: 1px solid var(--gray-200);
       border-bottom: 1px solid var(--gray-200);
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.2s;
       cursor: default;
+      position: relative;
     }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-vivid), var(--primary-mid));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .service-card:hover::before { opacity: 1; }
     .service-card:nth-child(3n) { border-right: none; }
     .service-card:nth-child(4),
     .service-card:nth-child(5),
     .service-card:nth-child(6) { border-bottom: none; }
-    .service-card:hover { background: var(--primary-pale); }
+    .service-card:hover { background: var(--primary-xpale); }
     .service-num {
       font-size: 11px;
-      color: var(--gray-300);
-      font-weight: 500;
+      color: var(--primary-vivid);
+      font-weight: 600;
       margin-bottom: 20px;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
     }
     .service-card h3 {
       font-size: 15px;
@@ -328,7 +349,7 @@
     .service-card p { font-size: 13px; color: var(--gray-500); line-height: 1.65; }
 
     /* ─── COMPLIANCE ─── */
-    #compliance { background: var(--primary); }
+    #compliance { background: linear-gradient(145deg, var(--gray-900) 0%, var(--primary) 50%, var(--primary-vivid) 100%); }
     #compliance .label { color: var(--primary-light); }
     #compliance h2 { color: var(--white); }
     #compliance h2 em { color: #fff; font-style: normal; font-weight: 600; }
@@ -356,10 +377,11 @@
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 1px;
-      padding: 4px 8px;
-      border-radius: 4px;
-      background: rgba(255,255,255,0.12);
-      color: var(--primary-light);
+      padding: 5px 10px;
+      border-radius: 5px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
       flex-shrink: 0;
       margin-top: 2px;
     }
@@ -367,7 +389,7 @@
     .comp-item p { font-size: 12.5px; color: rgba(255,255,255,0.8); line-height: 1.55; }
 
     /* ─── PROCESS ─── */
-    #process { background: var(--primary-pale); }
+    #process { background: var(--primary-xpale); }
     .process-list {
       display: flex;
       flex-direction: column;
@@ -379,9 +401,12 @@
       align-items: start;
       padding: 32px 0;
       border-bottom: 1px solid var(--gray-200);
+      transition: background 0.15s;
+      border-radius: 6px;
     }
     .process-row:last-child { border-bottom: none; }
-    .p-num { font-size: 13px; color: var(--gray-300); font-weight: 500; padding-top: 2px; }
+    .process-row:hover { background: var(--primary-pale); padding-left: 12px; padding-right: 12px; }
+    .p-num { font-size: 14px; color: var(--primary-vivid); font-weight: 700; padding-top: 2px; }
     .p-title { font-size: 15px; font-weight: 600; color: var(--black); }
     .p-desc { font-size: 14px; color: var(--gray-500); line-height: 1.65; }
 
@@ -430,8 +455,8 @@
 
     /* ─── FOOTER ─── */
     footer {
-      border-top: 1px solid var(--primary-light);
-      background: var(--primary-pale);
+      border-top: 3px solid var(--primary-vivid);
+      background: linear-gradient(135deg, var(--primary-xpale) 0%, var(--primary-pale) 100%);
       padding: 48px 32px;
     }
     .footer-inner {
@@ -509,13 +534,13 @@
     .care-photo img { width: 100%; height: 100%; min-height: 480px; object-fit: cover; display: block; }
     .care-content {
       padding: 80px 64px;
-      background: var(--primary-pale);
+      background: linear-gradient(160deg, var(--primary-xpale) 0%, var(--primary-pale) 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
     .care-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
-    .care-stat-num { font-size: 36px; font-weight: 300; letter-spacing: -1.5px; color: var(--primary); line-height: 1; margin-bottom: 6px; }
+    .care-stat-num { font-size: 40px; font-weight: 300; letter-spacing: -1.5px; color: var(--primary-vivid); line-height: 1; margin-bottom: 6px; }
     .care-stat-label { font-size: 12px; color: var(--gray-500); line-height: 1.5; }
 
     /* ─── RESPONSIVE ─── */
@@ -560,18 +585,18 @@
     <a class="logo" href="#">
       <svg class="logo-icon" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
         <!-- G-shaped circle ring -->
-        <path d="M 92 21 A 48 48 0 1 0 92 83" stroke="#2C6975" stroke-width="5.5" fill="none" stroke-linecap="butt"/>
+        <path d="M 92 21 A 48 48 0 1 0 92 83" stroke="#1A6673" stroke-width="5.5" fill="none" stroke-linecap="butt"/>
         <!-- G crossbar -->
-        <line x1="92" y1="83" x2="68" y2="83" stroke="#2C6975" stroke-width="5.5" stroke-linecap="round"/>
+        <line x1="92" y1="83" x2="68" y2="83" stroke="#1A6673" stroke-width="5.5" stroke-linecap="round"/>
         <!-- Buildings (outlined) -->
-        <rect x="26" y="66" width="10" height="22" stroke="#2C6975" stroke-width="2.5" fill="none"/>
-        <rect x="38" y="54" width="10" height="34" stroke="#2C6975" stroke-width="2.5" fill="none"/>
-        <rect x="50" y="40" width="10" height="48" stroke="#2C6975" stroke-width="2.5" fill="none"/>
-        <rect x="62" y="46" width="10" height="42" stroke="#2C6975" stroke-width="2.5" fill="none"/>
-        <rect x="74" y="60" width="10" height="28" stroke="#2C6975" stroke-width="2.5" fill="none"/>
+        <rect x="26" y="66" width="10" height="22" stroke="#1A6673" stroke-width="2.5" fill="none"/>
+        <rect x="38" y="54" width="10" height="34" stroke="#1A6673" stroke-width="2.5" fill="none"/>
+        <rect x="50" y="40" width="10" height="48" stroke="#1A6673" stroke-width="2.5" fill="none"/>
+        <rect x="62" y="46" width="10" height="42" stroke="#1A6673" stroke-width="2.5" fill="none"/>
+        <rect x="74" y="60" width="10" height="28" stroke="#1A6673" stroke-width="2.5" fill="none"/>
         <!-- Sweeping arrow -->
-        <path d="M 13 76 C 22 50 58 30 88 19" stroke="#2C6975" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <path d="M 82 14 L 88 19 L 83 26" stroke="#2C6975" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 13 76 C 22 50 58 30 88 19" stroke="#1A6673" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 82 14 L 88 19 L 83 26" stroke="#1A6673" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <div>
         <span class="logo-text">GHAF</span>
@@ -604,7 +629,7 @@
     </div>
     <div class="hero-meta">
       <div class="hero-photo-card">
-        <img src="images/prof.jpg" alt="GHAF Business Consultation" class="hero-photo" />
+        <img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=800&auto=format&fit=crop&q=80" alt="GHAF Business Consultation" class="hero-photo" />
         <div class="hero-photo-overlay">
           <svg viewBox="0 0 110 110" fill="none" style="width:40px;height:40px;flex-shrink:0">
             <path d="M 92 21 A 48 48 0 1 0 92 83" stroke="white" stroke-width="5.5" fill="none" stroke-linecap="butt"/>
@@ -708,7 +733,7 @@
       </div>
       <div class="about-right reveal">
         <div class="about-photo-wrap">
-          <img src="images/family1.jpg" alt="Patient families we serve" class="about-photo" />
+          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&auto=format&fit=crop&q=80" alt="Patient families we serve" class="about-photo" />
           <div class="about-photo-tag">
             <strong>Serving UAE healthcare</strong>
             <span>since 2021</span>
@@ -766,7 +791,7 @@
 <section id="care" class="section" style="background:var(--white);padding-top:0;padding-bottom:0;">
   <div class="care-grid">
     <div class="care-photo">
-      <img src="images/family2.jpg" alt="Families we care for" />
+      <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?w=900&auto=format&fit=crop&q=80" alt="Families we care for" />
     </div>
     <div class="care-content">
       <div class="label">Our Mission</div>
@@ -949,18 +974,18 @@
       <a class="logo" href="#">
       <svg class="logo-icon" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
         <!-- G-shaped circle ring -->
-        <path d="M 92 21 A 48 48 0 1 0 92 83" stroke="#2C6975" stroke-width="5.5" fill="none" stroke-linecap="butt"/>
+        <path d="M 92 21 A 48 48 0 1 0 92 83" stroke="#1A6673" stroke-width="5.5" fill="none" stroke-linecap="butt"/>
         <!-- G crossbar -->
-        <line x1="92" y1="83" x2="68" y2="83" stroke="#2C6975" stroke-width="5.5" stroke-linecap="round"/>
+        <line x1="92" y1="83" x2="68" y2="83" stroke="#1A6673" stroke-width="5.5" stroke-linecap="round"/>
         <!-- Buildings (outlined) -->
-        <rect x="26" y="66" width="10" height="22" stroke="#2C6975" stroke-width="2.5" fill="none"/>
-        <rect x="38" y="54" width="10" height="34" stroke="#2C6975" stroke-width="2.5" fill="none"/>
-        <rect x="50" y="40" width="10" height="48" stroke="#2C6975" stroke-width="2.5" fill="none"/>
-        <rect x="62" y="46" width="10" height="42" stroke="#2C6975" stroke-width="2.5" fill="none"/>
-        <rect x="74" y="60" width="10" height="28" stroke="#2C6975" stroke-width="2.5" fill="none"/>
+        <rect x="26" y="66" width="10" height="22" stroke="#1A6673" stroke-width="2.5" fill="none"/>
+        <rect x="38" y="54" width="10" height="34" stroke="#1A6673" stroke-width="2.5" fill="none"/>
+        <rect x="50" y="40" width="10" height="48" stroke="#1A6673" stroke-width="2.5" fill="none"/>
+        <rect x="62" y="46" width="10" height="42" stroke="#1A6673" stroke-width="2.5" fill="none"/>
+        <rect x="74" y="60" width="10" height="28" stroke="#1A6673" stroke-width="2.5" fill="none"/>
         <!-- Sweeping arrow -->
-        <path d="M 13 76 C 22 50 58 30 88 19" stroke="#2C6975" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <path d="M 82 14 L 88 19 L 83 26" stroke="#2C6975" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 13 76 C 22 50 58 30 88 19" stroke="#1A6673" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 82 14 L 88 19 L 83 26" stroke="#1A6673" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <div>
         <span class="logo-text">GHAF</span>
@@ -993,19 +1018,19 @@
     bottom: 24px;
     right: 24px;
     z-index: 999;
-    width: 54px;
-    height: 54px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    background: #2C6975;
+    background: linear-gradient(135deg, #1A6673 0%, #2A9D8F 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 20px rgba(44,105,117,0.4);
+    box-shadow: 0 4px 20px rgba(42,157,143,0.5);
     transition: transform 0.2s, box-shadow 0.2s;
   }
   .wa-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 28px rgba(44,105,117,0.55);
+    transform: scale(1.12);
+    box-shadow: 0 8px 32px rgba(42,157,143,0.65);
   }
 </style>
 
